@@ -5,9 +5,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "serve . -p 3000",
+    "start": "node server.js",
+    "dev": "node server.js",
     "test": "node test/validate.js",
-    "build": "node scripts/build.js",
     "check": "node test/validate.js"
   },
   "keywords": [
