@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CO CREW WORKSPACE — A creator-focused service workspace helping creators build their brand, create better content, and grow with the right tools, people, and guidance.">
+  <meta name="keywords" content="creators, content creation, video editing, creator mentorship, website development, digital products">
+  <meta name="theme-color" content="#070708">
+  
+  <title>CO CREW WORKSPACE — CREATE. GROW. BUILD MORE.</title>
+  
+  <!-- Inter font for editorial clarity and contrast -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandRed: '#FF1E27',
+            canvas: '#070708',
+            glassBg: 'rgba(10, 10, 12, 0.76)',
+          },
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Custom Design System Styles -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="relative bg-[#070708] text-white">
+
+  <!-- Ambient light & geometric grid background -->
+  <div class="ambient-grid"></div>
+
+  <!-- =========================================================================
+       HEADER & NAVIGATION (Single row, non-wrapping, restrained glass)
+       ========================================================================= -->
+  <header id="main-header" class="cc-navbar">
+    <div class="max-w-7xl mx-auto h-full px-4 sm:px-8 lg:px-12 flex items-center justify-between">
+      
+      <!-- 1. LEFT: ORIGINAL CO CREW WORKSPACE LOGO -->
+      <div class="flex-shrink-0 flex items-center">
+        <a href="#home" class="inline-flex items-center group" aria-label="CO CREW WORKSPACE Home">
+          <img 
+            src="cocrew-workspace-logo.jpg" 
+            alt="CO CREW WORKSPACE" 
+            class="h-9 sm:h-10 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.02]"
+          >
+        </a>
+      </div>
+
+      <!-- 2. CENTRE: HORIZONTAL NAVIGATION LINKS (Non-wrapping desktop row) -->
+      <nav class="hidden lg:flex items-center flex-shrink-0" aria-label="Main Navigation">
+        <ul class="flex items-center gap-6 xl:gap-9 m-0 p-0 list-none">
+          <li>
+            <a href="#home" class="cc-nav-item-link active" data-nav="home">Home</a>
+          </li>
+          <li>
+            <a href="#services" class="cc-nav-item-link" data-nav="services">Services</a>
+          </li>
+          <li>
+            <a href="#store" class="cc-nav-item-link" data-nav="store">Digital Store</a>
+          </li>
+          <li>
+            <a href="#about" class="cc-nav-item-link" data-nav="about" onclick="openAboutModal(event)">About</a>
+          </li>
+          <li>
+            <a href="#contact" class="cc-nav-item-link" data-nav="contact" onclick="openContactModal(event)">Contact</a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- 3. RIGHT: OUTLINED RED "REQUEST A SERVICE" BUTTON + MOBILE MENU TRIGGER -->
+      <div class="flex items-center gap-3 sm:gap-4 flex-shrink-0">
+        <!-- Desktop Outlined Red CTA -->
+        <button 
+          type="button" 
+          class="cc-btn-outlined-red hidden sm:inline-flex" 
+          onclick="openRequestModal()"
+          aria-label="Request a Service"
+        >
+          <span>Request a Service</span>
+          <svg class="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.33334 8H12.6667M12.6667 8L8.66667 4M12.6667 8L8.66667 12" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+
+        <!-- Mobile Quick CTA (Compact button ensuring easy access on small viewports) -->
+        <button 
+          type="button" 
+          class="cc-btn-outlined-red sm:hidden py-1.5 px-3.5 text-xs" 
+          onclick="openRequestModal()"
+          aria-label="Request a Service"
+        >
+          <span>Request</span>
+        </button>
+
+        <!-- Mobile Hamburger Trigger -->
+        <button 
+          id="mobile-menu-btn" 
+          class="lg:hidden w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-white/10 transition-colors" 
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+        >
+          <svg id="hamburger-svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="7" x2="21" y2="7"></line>
+            <line x1="3" y1="17" x2="21" y2="17"></line>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Mobile Glass Drawer Overlay -->
+  <div id="mobile-drawer" class="cc-mobile-drawer lg:hidden" aria-hidden="true">
+    <nav class="flex flex-col gap-2" aria-label="Mobile Navigation">
+      <a href="#home" class="flex items-center justify-between p-3.5 rounded-xl bg-white/5 text-white font-semibold text-sm border-l-2 border-[#FF1E27]" onclick="closeMobileDrawer()">
+        <span>Home</span>
+        <span class="w-2 h-2 rounded-full bg-[#FF1E27] shadow-[0_0_8px_#FF1E27]"></span>
+      </a>
+      <a href="#services" class="flex items-center justify-between p-3.5 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5 font-medium text-sm transition-colors" onclick="closeMobileDrawer()">
+        <span>Services</span>
+        <span class="text-xs text-zinc-600">01–06</span>
+      </a>
+      <a href="#store" class="flex items-center justify-between p-3.5 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5 font-medium text-sm transition-colors" onclick="closeMobileDrawer()">
+        <span>Digital Store</span>
+        <span class="text-xs text-zinc-600">Catalogue</span>
+      </a>
+      <a href="#about" class="flex items-center justify-between p-3.5 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5 font-medium text-sm transition-colors" onclick="closeMobileDrawer(); openAboutModal(event)">
+        <span>About</span>
+      </a>
+      <a href="#contact" class="flex items-center justify-between p-3.5 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5 font-medium text-sm transition-colors" onclick="closeMobileDrawer(); openContactModal(event)">
+        <span>Contact</span>
+      </a>
+    </nav>
+
+    <!-- Mobile Drawer Dedicated Action -->
+    <div class="pt-4 border-t border-white/10">
+      <button 
+        type="button" 
+        class="cc-btn-outlined-red w-full justify-center py-3.5 text-sm" 
+        onclick="closeMobileDrawer(); openRequestModal()"
+      >
+        <span>Request a Service</span>
+        <svg class="w-4 h-4 ml-1" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3.33334 8H12.6667M12.6667 8L8.66667 4M12.6667 8L8.66667 12" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- MAIN LANDING CONTENT -->
+  <main class="relative z-10 pt-[76px] overflow-hidden">
+
+    <!-- =======================================================================
+         SECTION 01 — HERO (Asymmetric Two-Column Editorial Composition)
+         ======================================================================= -->
+    <section id="home" class="relative min-h-[calc(100vh-76px)] flex items-center justify-center py-16 sm:py-24 px-4 sm:px-8 lg:px-12 border-b border-white/[0.06]">
+      <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        
+        <!-- Left Column: Typography & CTAs -->
+        <div class="lg:col-span-7 flex flex-col items-start space-y-6 sm:space-y-8 text-left">
+          
+          <!-- Eyebrow -->
+          <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-md">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#FF1E27] shadow-[0_0_8px_#FF1E27]"></span>
+            <span class="text-xs font-semibold tracking-[0.2em] text-zinc-300 uppercase">FOR CREATORS · BY CREATORS</span>
+          </div>
+
+          <!-- Headline with exact line hierarchy and colors -->
+          <h1 class="text-5xl sm:text-7xl lg:text-[5.5rem] xl:text-[6.25rem] font-black tracking-tight leading-[0.92] text-white">
+            <span class="block text-white">CREATE.</span>
+            <span class="block text-[#FF1E27]">GROW.</span>
+            <span class="block text-white">BUILD MORE.</span>
+          </h1>
+
+          <!-- Supporting Copy -->
+          <p class="text-base sm:text-lg lg:text-xl text-zinc-400 max-w-xl font-normal leading-relaxed">
+            CO CREW WORKSPACE helps creators build their brand, create better content and grow with the right tools, people and guidance.
+          </p>
+
+          <!-- CTAs -->
+          <div class="flex flex-wrap items-center gap-4 pt-2 w-full sm:w-auto">
+            <button 
+              type="button" 
+              class="cc-btn-outlined-red py-3.5 px-8 text-sm w-full sm:w-auto" 
+              onclick="openRequestModal()"
+            >
+              <span>Request a Service</span>
+              <svg class="w-4 h-4" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3.33334 8H12.6667M12.6667 8L8.66667 4M12.6667 8L8.66667 12" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            
+            <a 
+              href="#store" 
+              class="cc-btn-glass py-3.5 px-7 text-sm w-full sm:w-auto text-center"
+            >
+              <span>Explore Digital Store</span>
+            </a>
+          </div>
+
+          <!-- Micro Trust Anchor -->
+          <div class="pt-4 flex items-center gap-6 text-xs text-zinc-500 font-medium">
+            <div class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-[#FF1E27]" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+              </svg>
+              <span>Human-Led Review</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-[#FF1E27]" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+              </svg>
+              <span>No Account Required</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Pure CSS Red-Lit Geometric Visual (No AI or stock images) -->
+        <div class="lg:col-span-5 flex items-center justify-center">
+          <div class="hero-visual-frame p-6 flex flex-col justify-between">
+            
+            <!-- Top Frame Metadata -->
+            <div class="flex items-center justify-between text-[11px] font-mono text-zinc-500 pb-4 border-b border-white/[0.08]">
+              <span class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-[#FF1E27]"></span>
+                <span>SYSTEM CORE v1.0</span>
+              </span>
+              <span>GRID // 20.10.2026</span>
+            </div>
+
+            <!-- Central Geometric Vector Composition -->
+            <div class="relative my-auto py-8 flex items-center justify-center">
+              <svg class="w-64 h-64 sm:w-72 sm:h-72" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Outer Isometric Coordinate Diamond -->
+                <polygon points="150,20 280,150 150,280 20,150" stroke="rgba(255, 255, 255, 0.12)" stroke-width="1" />
+                <polygon points="150,45 255,150 150,255 45,150" stroke="rgba(255, 30, 39, 0.3)" stroke-width="1.5" stroke-dasharray="4 4" />
+                
+                <!-- Inner Precision Reticle -->
+                <polygon points="150,80 220,150 150,220 80,150" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1" />
+                
+                <!-- Axis Ray Dividers -->
+                <line x1="150" y1="20" x2="150" y2="280" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1" />
+                <line x1="20" y1="150" x2="280" y2="150" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1" />
+                
+                <!-- Red-Lit Focal Core Prism -->
+                <circle cx="150" cy="150" r="38" fill="rgba(255, 30, 39, 0.12)" stroke="#FF1E27" stroke-width="1.5" />
+                <circle cx="150" cy="150" r="16" fill="#FF1E27" opacity="0.85" />
+                
+                <!-- Coordinate Node Markers -->
+                <circle cx="150" cy="20" r="3.5" fill="#FFFFFF" />
+                <circle cx="280" cy="150" r="3.5" fill="#FF1E27" />
+                <circle cx="150" cy="280" r="3.5" fill="#FFFFFF" />
+                <circle cx="20" cy="150" r="3.5" fill="#FF1E27" />
+                
+                <!-- Corner Framing Accents -->
+                <path d="M 50 70 L 40 70 L 40 80" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" fill="none" />
+                <path d="M 250 70 L 260 70 L 260 80" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" fill="none" />
+                <path d="M 50 230 L 40 230 L 40 220" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" fill="none" />
+                <path d="M 250 230 L 260 230 L 260 220" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" fill="none" />
+              </svg>
+
+              <!-- Floating Micro Glass Data Chip -->
+              <div class="absolute -bottom-2 right-4 px-3 py-1.5 rounded-lg bg-black/80 border border-white/10 backdrop-blur-md text-[10px] font-mono text-zinc-400 shadow-xl">
+                <span>NODE: 01-06 READY</span>
+              </div>
+            </div>
+
+            <!-- Bottom Frame Details -->
+            <div class="pt-4 border-t border-white/[0.08] flex items-center justify-between text-xs text-zinc-400">
+              <span class="font-medium text-white">RESTRAINED GEOMETRIC DEPTH</span>
+              <span class="text-[#FF1E27] font-mono font-semibold">100% CSS ENGINE</span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         SECTION 02 — SIX-SERVICE STRIP
+         ======================================================================= -->
+    <section id="services-strip" class="relative py-12 px-4 sm:px-8 lg:px-12 bg-[#09090C] border-b border-white/[0.06]">
+      <div class="max-w-7xl mx-auto">
+        
+        <!-- Strip Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+          <div>
+            <h2 class="text-xs font-bold tracking-[0.2em] text-[#FF1E27] uppercase">OFFICIAL SERVICE MATRIX</h2>
+            <p class="text-zinc-400 text-sm mt-0.5">Six dedicated service streams with transparent availability status</p>
+          </div>
+          <span class="text-xs font-mono text-zinc-500">OCTOBER 2026 LAUNCH EDITION</span>
+        </div>
+
+        <!-- 6-Item Strip Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3">
+          
+          <!-- 01 -->
+          <div class="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] flex flex-col justify-between hover:border-white/20 transition-colors">
+            <div class="flex items-center justify-between mb-3">
+              <span class="cc-num-badge">01</span>
+              <span class="badge-available">Available</span>
+            </div>
+            <h3 class="text-sm font-semibold text-white leading-snug">Content & Creator Solutions</h3>
+          </div>
+
+          <!-- 02 -->
+          <div class="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] flex flex-col justify-between hover:border-white/20 transition-colors">
+            <div class="flex items-center justify-between mb-3">
+              <span class="cc-num-badge">02</span>
+              <span class="badge-available">Available</span>
+            </div>
+            <h3 class="text-sm font-semibold text-white leading-snug">Creator Growth & Mentorship</h3>
+          </div>
+
+          <!-- 03 -->
+          <div class="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] flex flex-col justify-between hover:border-white/20 transition-colors">
+            <div class="flex items-center justify-between mb-3">
+              <span class="cc-num-badge">03</span>
+              <span class="badge-available">Available</span>
+            </div>
+            <h3 class="text-sm font-semibold text-white leading-snug">Creator–Editor Connect</h3>
+          </div>
+
+          <!-- 04 -->
+          <div class="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] flex flex-col justify-between hover:border-white/20 transition-colors">
+            <div class="flex items-center justify-between mb-3">
+              <span class="cc-num-badge">04</span>
+              <span class="badge-available">Available</span>
+            </div>
+            <h3 class="text-sm font-semibold text-white leading-snug">Portfolio & Website Development</h3>
+          </div>
+
+          <!-- 05 -->
+          <div class="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] flex flex-col justify-between hover:border-white/20 transition-colors">
+            <div class="flex items-center justify-between mb-3">
+              <span class="cc-num-badge">05</span>
+              <span class="badge-catalogue">Catalogue</span>
+            </div>
+            <h3 class="text-sm font-semibold text-white leading-snug">Digital Products</h3>
+          </div>
+
+          <!-- 06 -->
+          <div class="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] flex flex-col justify-between opacity-80 hover:border-white/10 transition-colors">
+            <div class="flex items-center justify-between mb-3">
+              <span class="cc-num-badge">06</span>
+              <span class="badge-coming-soon">Coming Soon</span>
+            </div>
+            <h3 class="text-sm font-semibold text-zinc-400 leading-snug">AI Agents & Workflow Automation</h3>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         SECTION 03 — SERVICES OVERVIEW (Creator-Friendly Detailed Architecture)
+         ======================================================================= -->
+    <section id="services" class="relative py-20 sm:py-28 px-4 sm:px-8 lg:px-12 border-b border-white/[0.06]">
+      <div class="max-w-7xl mx-auto space-y-16">
+        
+        <!-- Section Header -->
+        <div class="max-w-2xl space-y-3">
+          <div class="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] text-[#FF1E27] uppercase">
+            <span>SECTION 03</span>
+            <span>//</span>
+            <span>SERVICES OVERVIEW</span>
+          </div>
+          <h2 class="text-3xl sm:text-5xl font-black text-white tracking-tight">
+            ENGINEERED FOR THE CREATOR ECONOMY.
+          </h2>
+          <p class="text-zinc-400 text-base leading-relaxed">
+            Every solution is designed to eliminate operational drag, elevate output quality, and accelerate audience development.
+          </p>
+        </div>
+
+        <!-- Dynamic Editorial Grid (Mixed Typography-Led Layouts) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          
+          <!-- SERVICE 01 -->
+          <div class="cc-service-card group">
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <span class="cc-num-badge">01</span>
+                <span class="badge-available">Available</span>
+              </div>
+              <h3 class="text-xl font-bold text-white tracking-tight group-hover:text-[#FF1E27] transition-colors">
+                CONTENT & CREATOR SOLUTIONS
+              </h3>
+              <p class="text-sm text-zinc-400 leading-relaxed">
+                Scripts, hooks, captions, ideas, and content planning tailored to the creator's niche, platform, and language.
+              </p>
+            </div>
+            <div class="pt-6 mt-6 border-t border-white/[0.08]">
+              <button 
+                type="button" 
+                class="w-full cc-btn-outlined-red py-2.5 text-xs justify-between"
+                onclick="openRequestModal('Content & Creator Solutions')"
+              >
+                <span>Request Service</span>
+                <svg class="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none"><path d="M3.33 8h9.34M12.67 8L8.67 4M12.67 8l-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- SERVICE 02 -->
+          <div class="cc-service-card group">
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <span class="cc-num-badge">02</span>
+                <span class="badge-available">Available</span>
+              </div>
+              <h3 class="text-xl font-bold text-white tracking-tight group-hover:text-[#FF1E27] transition-colors">
+                CREATOR GROWTH & MENTORSHIP
+              </h3>
+              <p class="text-sm text-zinc-400 leading-relaxed">
+                Practical growth guidance, content reviews, and workshops when sessions are confirmed.
+              </p>
+            </div>
+            <div class="pt-6 mt-6 border-t border-white/[0.08]">
+              <button 
+                type="button" 
+                class="w-full cc-btn-outlined-red py-2.5 text-xs justify-between"
+                onclick="openRequestModal('Creator Growth & Mentorship')"
+              >
+                <span>Request Growth Review</span>
+                <svg class="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none"><path d="M3.33 8h9.34M12.67 8L8.67 4M12.67 8l-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- SERVICE 03 -->
+          <div class="cc-service-card group">
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <span class="cc-num-badge">03</span>
+                <span class="badge-available">Available</span>
+              </div>
+              <h3 class="text-xl font-bold text-white tracking-tight group-hover:text-[#FF1E27] transition-colors">
+                CREATOR–EDITOR CONNECT
+              </h3>
+              <p class="text-sm text-zinc-400 leading-relaxed">
+                A human-led process in which the team reviews requirements and helps introduce suitable editors.
+              </p>
+            </div>
+            <div class="pt-6 mt-6 border-t border-white/[0.08]">
+              <button 
+                type="button" 
+                class="w-full cc-btn-outlined-red py-2.5 text-xs justify-between"
+                onclick="openRequestModal('Creator–Editor Connect')"
+              >
+                <span>Connect With Editors</span>
+                <svg class="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none"><path d="M3.33 8h9.34M12.67 8L8.67 4M12.67 8l-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- SERVICE 04 -->
+          <div class="cc-service-card group">
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <span class="cc-num-badge">04</span>
+                <span class="badge-available">Available</span>
+              </div>
+              <h3 class="text-xl font-bold text-white tracking-tight group-hover:text-[#FF1E27] transition-colors">
+                PORTFOLIO & WEBSITE DEVELOPMENT
+              </h3>
+              <p class="text-sm text-zinc-400 leading-relaxed">
+                Creator portfolios, personal websites, and landing pages based on the creator's requirements.
+              </p>
+            </div>
+            <div class="pt-6 mt-6 border-t border-white/[0.08]">
+              <button 
+                type="button" 
+                class="w-full cc-btn-outlined-red py-2.5 text-xs justify-between"
+                onclick="openRequestModal('Portfolio & Website Development')"
+              >
+                <span>Build Your Website</span>
+                <svg class="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none"><path d="M3.33 8h9.34M12.67 8L8.67 4M12.67 8l-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- SERVICE 05 -->
+          <div class="cc-service-card group">
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <span class="cc-num-badge">05</span>
+                <span class="badge-catalogue">Catalogue</span>
+              </div>
+              <h3 class="text-xl font-bold text-white tracking-tight group-hover:text-[#FF1E27] transition-colors">
+                DIGITAL PRODUCTS
+              </h3>
+              <p class="text-sm text-zinc-400 leading-relaxed">
+                Creator resources such as prompt books, script books, templates, and workflow resources when genuine products are ready.
+              </p>
+            </div>
+            <div class="pt-6 mt-6 border-t border-white/[0.08]">
+              <a 
+                href="#store" 
+                class="w-full cc-btn-glass py-2.5 text-xs justify-between"
+              >
+                <span>View Catalogue Status</span>
+                <svg class="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none"><path d="M3.33 8h9.34M12.67 8L8.67 4M12.67 8l-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- SERVICE 06 -->
+          <div class="cc-service-card is-coming-soon">
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <span class="cc-num-badge text-zinc-600">06</span>
+                <span class="badge-coming-soon">Coming Soon</span>
+              </div>
+              <h3 class="text-xl font-bold text-zinc-300 tracking-tight">
+                AI AGENTS & WORKFLOW AUTOMATION
+              </h3>
+              <p class="text-sm text-zinc-500 leading-relaxed">
+                Future AI agent and workflow automation services. Currently under internal testing and validation.
+              </p>
+            </div>
+            <div class="pt-6 mt-6 border-t border-white/[0.05]">
+              <div class="w-full py-2.5 px-3 rounded-full bg-white/[0.02] border border-white/[0.05] text-zinc-500 text-xs text-center font-medium">
+                Not Orderable — Under Development
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         SECTION 04 — DIGITAL STORE PREVIEW (Honest Empty State)
+         ======================================================================= -->
+    <section id="store" class="relative py-20 sm:py-28 px-4 sm:px-8 lg:px-12 bg-[#09090C] border-b border-white/[0.06]">
+      <div class="max-w-7xl mx-auto space-y-12">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-white/[0.08]">
+          <div class="space-y-2">
+            <div class="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] text-[#FF1E27] uppercase">
+              <span>SECTION 04</span>
+              <span>//</span>
+              <span>DIGITAL STORE PREVIEW</span>
+            </div>
+            <h2 class="text-3xl sm:text-4xl font-black text-white tracking-tight">
+              CREATOR TOOLKITS & ASSETS.
+            </h2>
+          </div>
+          <p class="text-sm text-zinc-400 max-w-md">
+            A curated repository of production templates, prompt books, and creator frameworks.
+          </p>
+        </div>
+
+        <!-- Honest Empty State Card (No fake items, no fake countdowns) -->
+        <div class="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-8 sm:p-12 text-center max-w-3xl mx-auto space-y-6 backdrop-blur-md">
+          <div class="w-14 h-14 rounded-2xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center mx-auto text-[#FF1E27]">
+            <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+            </svg>
+          </div>
+
+          <div class="space-y-2">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 text-xs font-medium uppercase tracking-wider">
+              <span>Catalogue In Curation</span>
+            </div>
+            <h3 class="text-2xl font-bold text-white">Genuine Resources In Preparation</h3>
+            <p class="text-zinc-400 text-sm max-w-lg mx-auto leading-relaxed">
+              In accordance with our verified launch standards, product releases appear only once thoroughly tested and ready for production. Prompt books, script frameworks, and editing presets are currently being assembled for catalog release.
+            </p>
+          </div>
+
+          <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <button 
+              type="button" 
+              class="cc-btn-outlined-red py-3 px-6 text-xs w-full sm:w-auto"
+              onclick="openNotifyModal('Digital Store Catalogue')"
+            >
+              <span>Get Launch Notification</span>
+            </button>
+            <button 
+              type="button" 
+              class="cc-btn-glass py-3 px-6 text-xs w-full sm:w-auto"
+              onclick="openRequestModal('Digital Products')"
+            >
+              <span>Inquire About Custom Toolkits</span>
+            </button>
+          </div>
+
+          <div class="text-[11px] text-zinc-500 font-mono">
+            * Payment processing and automated download fulfillment will activate in a subsequent platform release.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         SECTION 05 — HOW IT WORKS (4-Step Workflow)
+         ======================================================================= -->
+    <section id="workflow" class="relative py-20 sm:py-28 px-4 sm:px-8 lg:px-12 border-b border-white/[0.06]">
+      <div class="max-w-7xl mx-auto space-y-16">
+        
+        <div class="max-w-2xl space-y-3">
+          <div class="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] text-[#FF1E27] uppercase">
+            <span>SECTION 05</span>
+            <span>//</span>
+            <span>LAUNCH WORKFLOW</span>
+          </div>
+          <h2 class="text-3xl sm:text-5xl font-black text-white tracking-tight">
+            SIMPLE. HUMAN-LED. TRANSPARENT.
+          </h2>
+          <p class="text-zinc-400 text-base leading-relaxed">
+            Our actual four-step process for connecting creator requirements with genuine execution.
+          </p>
+        </div>
+
+        <!-- 4 Steps: Horizontal on Desktop, Stacked on Mobile -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
+          
+          <!-- STEP 01 -->
+          <div class="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] space-y-4 relative flex flex-col justify-between">
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <span class="cc-num-badge text-base">01</span>
+                <span class="text-xs font-mono text-zinc-500">STAGE 1</span>
+              </div>
+              <h3 class="text-lg font-bold text-white tracking-tight">DISCOVER</h3>
+              <p class="text-sm text-zinc-400 leading-relaxed">
+                Explore the services and choose the one relevant to your needs.
+              </p>
+            </div>
+            <div class="pt-4 text-xs font-medium text-zinc-500 border-t border-white/[0.05]">
+              Identify creator goals
+            </div>
+          </div>
+
+          <!-- STEP 02 -->
+          <div class="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] space-y-4 relative flex flex-col justify-between">
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <span class="cc-num-badge text-base">02</span>
+                <span class="text-xs font-mono text-zinc-500">STAGE 2</span>
+              </div>
+              <h3 class="text-lg font-bold text-white tracking-tight">SUBMIT</h3>
+              <p class="text-sm text-zinc-400 leading-relaxed">
+                Describe your requirements through the appropriate service-request form. No customer account is required.
+              </p>
+            </div>
+            <div class="pt-4 text-xs font-medium text-zinc-500 border-t border-white/[0.05]">
+              Direct brief submission
+            </div>
+          </div>
+
+          <!-- STEP 03 -->
+          <div class="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] space-y-4 relative flex flex-col justify-between">
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <span class="cc-num-badge text-base">03</span>
+                <span class="text-xs font-mono text-zinc-500">STAGE 3</span>
+              </div>
+              <h3 class="text-lg font-bold text-white tracking-tight">REVIEW</h3>
+              <p class="text-sm text-zinc-400 leading-relaxed">
+                The CO CREW team reviews the submitted requirements manually.
+              </p>
+            </div>
+            <div class="pt-4 text-xs font-medium text-zinc-500 border-t border-white/[0.05]">
+              Quality & match assessment
+            </div>
+          </div>
+
+          <!-- STEP 04 -->
+          <div class="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] space-y-4 relative flex flex-col justify-between">
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <span class="cc-num-badge text-base">04</span>
+                <span class="text-xs font-mono text-zinc-500">STAGE 4</span>
+              </div>
+              <h3 class="text-lg font-bold text-white tracking-tight">FOLLOW UP</h3>
+              <p class="text-sm text-zinc-400 leading-relaxed">
+                The team contacts the creator to discuss the next steps and confirm delivery.
+              </p>
+            </div>
+            <div class="pt-4 text-xs font-medium text-zinc-500 border-t border-white/[0.05]">
+              Direct communication
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         SECTION 06 — FINAL CALL TO ACTION
+         ======================================================================= -->
+    <section class="relative py-24 sm:py-32 px-4 sm:px-8 lg:px-12 border-b border-white/[0.06] overflow-hidden">
+      <!-- Ambient central glow -->
+      <div class="absolute inset-0 pointer-events-none flex items-center justify-center">
+        <div class="w-[600px] h-[300px] bg-[#FF1E27]/10 rounded-full blur-[120px]"></div>
+      </div>
+
+      <div class="max-w-4xl mx-auto text-center space-y-8 relative z-10">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-md">
+          <span class="w-1.5 h-1.5 rounded-full bg-[#FF1E27]"></span>
+          <span class="text-xs font-semibold tracking-[0.2em] text-zinc-300 uppercase">LAUNCH READY · OCTOBER 2026</span>
+        </div>
+
+        <h2 class="text-4xl sm:text-6xl md:text-7xl font-black text-white tracking-tight leading-[0.95]">
+          YOUR NEXT CREATIVE MOVE STARTS HERE.
+        </h2>
+
+        <p class="text-base sm:text-xl text-zinc-400 max-w-2xl mx-auto font-normal leading-relaxed">
+          Tell us what you're building. Let's explore how CO CREW WORKSPACE can help.
+        </p>
+
+        <div class="flex flex-wrap items-center justify-center gap-4 pt-4">
+          <button 
+            type="button" 
+            class="cc-btn-outlined-red py-4 px-9 text-sm" 
+            onclick="openRequestModal()"
+          >
+            <span>Request a Service</span>
+            <svg class="w-4 h-4 ml-1" viewBox="0 0 16 16" fill="none"><path d="M3.33 8h9.34M12.67 8L8.67 4M12.67 8l-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+          </button>
+          
+          <a 
+            href="#store" 
+            class="cc-btn-glass py-4 px-8 text-sm"
+          >
+            <span>Explore Digital Store</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         SECTION 07 — FOOTER (Original Logo, Factual Brand, Verified Navigation)
+         ======================================================================= -->
+    <footer class="relative py-16 px-4 sm:px-8 lg:px-12 bg-[#050507]">
+      <div class="max-w-7xl mx-auto space-y-12">
+        
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-white/[0.08]">
+          
+          <!-- Column 1: Logo & Factual Bio -->
+          <div class="md:col-span-5 space-y-4">
+            <a href="#home" class="inline-block" aria-label="CO CREW WORKSPACE Home">
+              <img 
+                src="cocrew-workspace-logo.jpg" 
+                alt="CO CREW WORKSPACE" 
+                class="h-9 w-auto object-contain"
+              >
+            </a>
+            <p class="text-sm text-zinc-400 max-w-sm leading-relaxed">
+              A creator-focused service workspace helping creators build their brand, create better content, and grow with the right tools, people, and guidance.
+            </p>
+            <div class="text-xs font-mono text-zinc-500">
+              BUILD: 2026.10-PROD
+            </div>
+          </div>
+
+          <!-- Column 2: Navigation Links -->
+          <div class="md:col-span-3 space-y-3">
+            <h4 class="text-xs font-bold tracking-[0.15em] text-white uppercase">NAVIGATION</h4>
+            <ul class="space-y-2 text-sm text-zinc-400">
+              <li><a href="#home" class="hover:text-white transition-colors">Home</a></li>
+              <li><a href="#services" class="hover:text-white transition-colors">Services</a></li>
+              <li><a href="#store" class="hover:text-white transition-colors">Digital Store</a></li>
+              <li><a href="#about" class="hover:text-white transition-colors" onclick="openAboutModal(event)">About</a></li>
+              <li><a href="#contact" class="hover:text-white transition-colors" onclick="openContactModal(event)">Contact</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 3: Direct Action & Verified Contact -->
+          <div class="md:col-span-4 space-y-4">
+            <h4 class="text-xs font-bold tracking-[0.15em] text-white uppercase">DIRECT DESK</h4>
+            <p class="text-xs text-zinc-400 leading-relaxed">
+              Have a custom inquiry or special collaborative brief? Contact the creator team directly:
+            </p>
+            <div>
+              <button 
+                type="button" 
+                class="cc-btn-outlined-red py-2 px-5 text-xs w-full sm:w-auto" 
+                onclick="openRequestModal()"
+              >
+                <span>Request a Service</span>
+              </button>
+            </div>
+            <div class="pt-2">
+              <a href="mailto:desk@cocrewworkspace.com" class="text-xs text-zinc-400 hover:text-[#FF1E27] font-mono transition-colors">
+                desk@cocrewworkspace.com
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Footer Bottom: Policies & Copyright -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs text-zinc-500">
+          <div>
+            &copy; 2026 CO CREW WORKSPACE. All rights reserved.
+          </div>
+          <div class="flex items-center gap-6">
+            <button type="button" class="hover:text-white transition-colors" onclick="openPolicyModal('privacy')">Privacy Policy</button>
+            <button type="button" class="hover:text-white transition-colors" onclick="openPolicyModal('terms')">Terms of Service</button>
+            <button type="button" class="hover:text-white transition-colors" onclick="openPolicyModal('refund')">Refund Policy</button>
+          </div>
+        </div>
+
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- =========================================================================
+       MODAL: SHARED SERVICE REQUEST FLOW (Saves to localStorage & confirms)
+       ========================================================================= -->
+  <div id="request-modal" class="cc-modal-backdrop" aria-hidden="true" role="dialog" aria-labelledby="modal-title">
+    <div class="cc-modal-card">
+      
+      <!-- Close Button -->
+      <button 
+        type="button" 
+        class="absolute top-5 right-5 w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-white/10 transition-colors"
+        onclick="closeRequestModal()"
+        aria-label="Close modal"
+      >
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+
+      <!-- Step 1: Form View -->
+      <div id="request-form-container" class="space-y-6">
+        <div>
+          <div class="inline-flex items-center gap-2 text-xs font-bold tracking-[0.15em] text-[#FF1E27] uppercase">
+            <span>DIRECT INTAKE</span>
+            <span>//</span>
+            <span>NO ACCOUNT REQUIRED</span>
+          </div>
+          <h3 id="modal-title" class="text-2xl font-bold text-white mt-1">Request a Service</h3>
+          <p class="text-xs text-zinc-400 mt-1">
+            Submit your requirements. The CO CREW team personally reviews all requests within 24–48 hours.
+          </p>
+        </div>
+
+        <form id="service-request-form" onsubmit="handleRequestSubmit(event)" class="space-y-4">
+          <!-- Name -->
+          <div>
+            <label for="req-name" class="cc-label">Your Name or Brand Handle <span class="text-[#FF1E27]">*</span></label>
+            <input type="text" id="req-name" class="cc-input" placeholder="e.g. Alex River / @alexcreates" required>
+          </div>
+
+          <!-- Email -->
+          <div>
+            <label for="req-email" class="cc-label">Email Address <span class="text-[#FF1E27]">*</span></label>
+            <input type="email" id="req-email" class="cc-input" placeholder="alex@creator.com" required>
+          </div>
+
+          <!-- Platform / Channel Link -->
+          <div>
+            <label for="req-channel" class="cc-label">Channel or Portfolio Link</label>
+            <input type="url" id="req-channel" class="cc-input" placeholder="https://youtube.com/@handle or instagram.com/...">
+          </div>
+
+          <!-- Service Selection -->
+          <div>
+            <label for="req-service" class="cc-label">Select Service <span class="text-[#FF1E27]">*</span></label>
+            <select id="req-service" class="cc-input bg-[#121216]" required>
+              <option value="Content & Creator Solutions">01. Content & Creator Solutions (Available)</option>
+              <option value="Creator Growth & Mentorship">02. Creator Growth & Mentorship (Available)</option>
+              <option value="Creator–Editor Connect">03. Creator–Editor Connect (Available)</option>
+              <option value="Portfolio & Website Development">04. Portfolio & Website Development (Available)</option>
+              <option value="Digital Products">05. Digital Products (Catalogue Inquiry)</option>
+            </select>
+          </div>
+
+          <!-- Requirements / Brief -->
+          <div>
+            <label for="req-brief" class="cc-label">Project Requirements & Brief <span class="text-[#FF1E27]">*</span></label>
+            <textarea id="req-brief" rows="3" class="cc-input" placeholder="Tell us what you are building, your timeline, and specific goals..." required></textarea>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="pt-2">
+            <button type="submit" id="submit-btn" class="w-full cc-btn-outlined-red py-3.5 text-sm justify-center">
+              <span>Submit Service Request</span>
+              <svg class="w-4 h-4 ml-1" viewBox="0 0 16 16" fill="none"><path d="M3.33 8h9.34M12.67 8L8.67 4M12.67 8l-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Step 2: Confirmed Success View (Appears only after verifiable local persistence) -->
+      <div id="request-success-container" class="hidden text-center py-6 space-y-5">
+        <div class="w-14 h-14 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mx-auto text-emerald-400">
+          <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        </div>
+        
+        <div class="space-y-2">
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] font-mono text-zinc-400">
+            <span>INQUIRY REF:</span>
+            <span id="confirmed-ref" class="text-white font-bold">CC-00000</span>
+          </div>
+          <h3 class="text-2xl font-bold text-white">Requirement Received</h3>
+          <p class="text-xs text-zinc-400 max-w-sm mx-auto leading-relaxed">
+            Your brief has been registered in the workspace queue. A member of the CO CREW team will review your requirements and reach out to your email shortly.
+          </p>
+        </div>
+
+        <div class="pt-4 flex justify-center">
+          <button type="button" class="cc-btn-glass py-2.5 px-6 text-xs" onclick="closeRequestModal()">
+            Done
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL: ABOUT & MISSION
+       ========================================================================= -->
+  <div id="about-modal" class="cc-modal-backdrop" aria-hidden="true" role="dialog">
+    <div class="cc-modal-card">
+      <button type="button" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white" onclick="closeAboutModal()">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+
+      <div class="space-y-4">
+        <div class="inline-flex items-center gap-2 text-xs font-bold tracking-[0.15em] text-[#FF1E27] uppercase">
+          <span>ABOUT CO CREW WORKSPACE</span>
+        </div>
+        <h3 class="text-2xl font-bold text-white">FOR CREATORS · BY CREATORS</h3>
+        <p class="text-sm text-zinc-400 leading-relaxed">
+          CO CREW WORKSPACE was established to solve the operational bottleneck faced by modern digital creators. While creators possess vision and creativity, managing scripting pipelines, vetting skilled editors, building bespoke portfolios, and orchestrating growth requires a coordinated workspace.
+        </p>
+        <p class="text-sm text-zinc-400 leading-relaxed">
+          We combine human-guided expertise with high-standard creator services. Every inquiry is personally handled by creators who understand platform dynamics, storytelling, and audience retention.
+        </p>
+        <div class="pt-2">
+          <button type="button" class="cc-btn-outlined-red py-2.5 px-6 text-xs" onclick="closeAboutModal(); openRequestModal()">
+            Work With Us
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL: CONTACT
+       ========================================================================= -->
+  <div id="contact-modal" class="cc-modal-backdrop" aria-hidden="true" role="dialog">
+    <div class="cc-modal-card">
+      <button type="button" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white" onclick="closeContactModal()">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+
+      <div class="space-y-4">
+        <div class="inline-flex items-center gap-2 text-xs font-bold tracking-[0.15em] text-[#FF1E27] uppercase">
+          <span>CONTACT DESK</span>
+        </div>
+        <h3 class="text-2xl font-bold text-white">Get in Touch</h3>
+        <p class="text-sm text-zinc-400 leading-relaxed">
+          Whether you have a general inquiry, partnership question, or need custom creator assistance, we are ready to assist.
+        </p>
+        
+        <div class="p-4 rounded-xl bg-white/[0.03] border border-white/10 space-y-2">
+          <div class="text-xs text-zinc-500 font-mono">PRIMARY DESK EMAIL</div>
+          <a href="mailto:desk@cocrewworkspace.com" class="text-sm font-semibold text-white hover:text-[#FF1E27] transition-colors block">
+            desk@cocrewworkspace.com
+          </a>
+          <div class="text-[11px] text-zinc-500">
+            Typical response turnaround: within 24 hours.
+          </div>
+        </div>
+
+        <div class="pt-2">
+          <button type="button" class="cc-btn-outlined-red py-2.5 px-6 text-xs w-full justify-center" onclick="closeContactModal(); openRequestModal()">
+            Submit Service Brief Instead
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL: POLICIES (Privacy, Terms, Refund)
+       ========================================================================= -->
+  <div id="policy-modal" class="cc-modal-backdrop" aria-hidden="true" role="dialog">
+    <div class="cc-modal-card">
+      <button type="button" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white" onclick="closePolicyModal()">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+
+      <div class="space-y-4">
+        <h3 id="policy-title" class="text-2xl font-bold text-white">Workspace Policy</h3>
+        <div id="policy-content" class="text-xs text-zinc-400 leading-relaxed space-y-3 max-h-[60vh] overflow-y-auto pr-2">
+          <!-- Dynamic policy text injected by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       PAGE SCRIPTS & INTERACTION LOGIC
+       ========================================================================= -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const header = document.getElementById('main-header');
+      const mobileBtn = document.getElementById('mobile-menu-btn');
+      const mobileDrawer = document.getElementById('mobile-drawer');
+      const hamburgerSvg = document.getElementById('hamburger-svg');
+
+      // 1. Scroll listener for glass intensification
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 20) {
+          header.classList.add('is-scrolled');
+        } else {
+          header.classList.remove('is-scrolled');
+        }
+      });
+
+      // 2. Active Section Spy
+      const sections = document.querySelectorAll('section[id]');
+      const navLinks = document.querySelectorAll('.cc-nav-item-link');
+
+      window.addEventListener('scroll', () => {
+        let current = 'home';
+        const scrollPosition = window.scrollY + 100;
+
+        sections.forEach(sec => {
+          const top = sec.offsetTop;
+          const height = sec.offsetHeight;
+          if (scrollPosition >= top && scrollPosition < top + height) {
+            current = sec.getAttribute('id');
+          }
+        });
+
+        navLinks.forEach(link => {
+          if (link.getAttribute('data-nav') === current) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        });
+      });
+
+      // 3. Mobile Drawer Toggle
+      let isDrawerOpen = false;
+
+      function openDrawer() {
+        isDrawerOpen = true;
+        mobileDrawer.classList.add('is-open');
+        mobileDrawer.setAttribute('aria-hidden', 'false');
+        mobileBtn.setAttribute('aria-expanded', 'true');
+        hamburgerSvg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>';
+      }
+
+      window.closeMobileDrawer = function() {
+        isDrawerOpen = false;
+        mobileDrawer.classList.remove('is-open');
+        mobileDrawer.setAttribute('aria-hidden', 'true');
+        mobileBtn.setAttribute('aria-expanded', 'false');
+        hamburgerSvg.innerHTML = '<line x1="3" y1="7" x2="21" y2="7"></line><line x1="3" y1="17" x2="21" y2="17"></line>';
+      };
+
+      mobileBtn.addEventListener('click', () => {
+        if (isDrawerOpen) {
+          window.closeMobileDrawer();
+        } else {
+          openDrawer();
+        }
+      });
+
+      // Global ESC handler for all modals and drawers
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          window.closeMobileDrawer();
+          closeRequestModal();
+          closeAboutModal();
+          closeContactModal();
+          closePolicyModal();
+        }
+      });
+    });
+
+    // =========================================================================
+    // SERVICE REQUEST MODAL LOGIC & VERIFIABLE LOCAL STORAGE
+    // =========================================================================
+    const requestModal = document.getElementById('request-modal');
+    const requestFormContainer = document.getElementById('request-form-container');
+    const requestSuccessContainer = document.getElementById('request-success-container');
+    const serviceSelect = document.getElementById('req-service');
+
+    function openRequestModal(preSelectedService = null) {
+      if (preSelectedService) {
+        for (let i = 0; i < serviceSelect.options.length; i++) {
+          if (serviceSelect.options[i].text.includes(preSelectedService)) {
+            serviceSelect.selectedIndex = i;
+            break;
+          }
+        }
+      }
+      requestFormContainer.classList.remove('hidden');
+      requestSuccessContainer.classList.add('hidden');
+      requestModal.classList.add('is-active');
+      requestModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeRequestModal() {
+      requestModal.classList.remove('is-active');
+      requestModal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    function handleRequestSubmit(e) {
+      e.preventDefault();
+      const submitBtn = document.getElementById('submit-btn');
+      
+      const payload = {
+        id: 'CC-' + Math.floor(10000 + Math.random() * 90000),
+        name: document.getElementById('req-name').value.trim(),
+        email: document.getElementById('req-email').value.trim(),
+        channel: document.getElementById('req-channel').value.trim(),
+        service: document.getElementById('req-service').value,
+        brief: document.getElementById('req-brief').value.trim(),
+        timestamp: new Date().toISOString(),
+        status: 'received'
+      };
+
+      // Button loading state
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>Verifying & Saving...</span>';
+
+      setTimeout(() => {
+        try {
+          // Persist to localStorage
+          const existing = JSON.parse(localStorage.getItem('cocrew_workspace_requests') || '[]');
+          existing.push(payload);
+          localStorage.setItem('cocrew_workspace_requests', JSON.stringify(existing));
+          
+          // Switch to confirmed state
+          document.getElementById('confirmed-ref').innerText = payload.id;
+          requestFormContainer.classList.add('hidden');
+          requestSuccessContainer.classList.remove('hidden');
+          
+          // Reset form
+          document.getElementById('service-request-form').reset();
+        } catch (err) {
+          alert('Could not save brief locally. Please email directly to desk@cocrewworkspace.com');
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<span>Submit Service Request</span>';
+        }
+      }, 500);
+    }
+
+    // =========================================================================
+    // ABOUT & CONTACT MODALS
+    // =========================================================================
+    function openAboutModal(e) {
+      if (e) e.preventDefault();
+      document.getElementById('about-modal').classList.add('is-active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeAboutModal() {
+      document.getElementById('about-modal').classList.remove('is-active');
+      document.body.style.overflow = '';
+    }
+
+    function openContactModal(e) {
+      if (e) e.preventDefault();
+      document.getElementById('contact-modal').classList.add('is-active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeContactModal() {
+      document.getElementById('contact-modal').classList.remove('is-active');
+      document.body.style.overflow = '';
+    }
+
+    function openNotifyModal(subject) {
+      openRequestModal('Digital Products');
+      document.getElementById('req-brief').value = 'Please notify me when verified ' + subject + ' become available.';
+    }
+
+    // =========================================================================
+    // POLICY MODALS
+    // =========================================================================
+    const policyModal = document.getElementById('policy-modal');
+    const policyTitle = document.getElementById('policy-title');
+    const policyContent = document.getElementById('policy-content');
+
+    const policies = {
+      privacy: {
+        title: 'Privacy Policy',
+        text: `
+          <p><strong>Effective Date: October 20, 2026</strong></p>
+          <p>CO CREW WORKSPACE respects the creative property and personal privacy of all creators. We collect information solely for service coordination and project execution.</p>
+          <p><strong>1. Information Collection:</strong> When submitting an intake brief, we collect your name/handle, contact email, channel links, and project requirements.</p>
+          <p><strong>2. Information Usage:</strong> Details provided are strictly used to evaluate requirements, establish service scopes, and coordinate directly with you. We do not sell or rent creator data to third-party ad networks.</p>
+          <p><strong>3. Content Confidentiality:</strong> All scripts, rough cuts, and unpublished strategies shared remain 100% creator property.</p>
+        `
+      },
+      terms: {
+        title: 'Terms of Service',
+        text: `
+          <p><strong>Effective Date: October 20, 2026</strong></p>
+          <p>Welcome to CO CREW WORKSPACE. By submitting inquiries or commissioning services, you agree to these operating standards.</p>
+          <p><strong>1. Scope of Engagement:</strong> Submission of an intake form constitutes a request for proposal and does not create an automatic contractual obligation until confirmed in writing by the CO CREW team.</p>
+          <p><strong>2. Human Review:</strong> Services are delivered through direct human expertise. Timelines and deliverables are finalized per individual creator brief.</p>
+          <p><strong>3. Respectful Collaboration:</strong> We maintain a collaborative, high-standard environment for both creators and editors.</p>
+        `
+      },
+      refund: {
+        title: 'Refund & Digital Product Policy',
+        text: `
+          <p><strong>Effective Date: October 20, 2026</strong></p>
+          <p><strong>1. Creator Services:</strong> Custom services (such as script development, website builds, and mentorship sessions) operate on milestone-based reviews agreed upon before commencement.</p>
+          <p><strong>2. Digital Products:</strong> In accordance with our launch guidelines, genuine digital resources (such as prompt books and templates) are currently in curation. Once payments activate, digital purchases will detail download guarantees and refund conditions clearly.</p>
+        `
+      }
+    };
+
+    function openPolicyModal(type) {
+      const p = policies[type];
+      if (p) {
+        policyTitle.innerText = p.title;
+        policyContent.innerHTML = p.text;
+        policyModal.classList.add('is-active');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closePolicyModal() {
+      policyModal.classList.remove('is-active');
+      document.body.style.overflow = '';
+    }
+  </script>
+</body>
+</html>

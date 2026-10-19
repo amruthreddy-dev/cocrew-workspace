@@ -1,0 +1,468 @@
+/* ==========================================================================
+   CO CREW WORKSPACE — Production Design System & Global Styles
+   Minimalism (Clarity) + Maximalism (Contrast) + Glassmorphism (Depth)
+   ========================================================================== */
+
+:root {
+  /* Brand Core Colors */
+  --cc-canvas: #070708;
+  --cc-canvas-subtle: #0D0D11;
+  --cc-surface-glass: rgba(10, 10, 12, 0.76);
+  --cc-surface-glass-dense: rgba(8, 8, 10, 0.92);
+  --cc-card-glass: rgba(16, 16, 20, 0.65);
+  
+  --cc-red: #FF1E27;
+  --cc-red-hover: #E0121B;
+  --cc-red-glow: rgba(255, 30, 39, 0.22);
+  --cc-red-glow-strong: rgba(255, 30, 39, 0.45);
+  --cc-red-subtle: rgba(255, 30, 39, 0.08);
+
+  --cc-text-primary: #FFFFFF;
+  --cc-text-muted: #9CA3AF;
+  --cc-text-subtle: #6B7280;
+  
+  --cc-border-glass: rgba(255, 255, 255, 0.08);
+  --cc-border-highlight: rgba(255, 255, 255, 0.16);
+  --cc-divider: rgba(255, 255, 255, 0.07);
+
+  /* Layout Constants */
+  --cc-header-height: 76px;
+  --cc-header-height-mobile: 66px;
+}
+
+/* Global Reset & Base */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--cc-header-height);
+  background-color: var(--cc-canvas);
+  color: var(--cc-text-primary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-color: var(--cc-canvas);
+  color: var(--cc-text-primary);
+  overflow-x: hidden;
+}
+
+/* Ambient Canvas Grid */
+.ambient-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: 
+    radial-gradient(circle at 50% 120px, rgba(255, 30, 39, 0.08) 0%, transparent 60%),
+    radial-gradient(circle at 85% 350px, rgba(255, 30, 39, 0.04) 0%, transparent 40%),
+    linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 64px 64px, 64px 64px;
+  z-index: 0;
+}
+
+/* ==========================================================================
+   NAVIGATION BAR (PREVENTS WRAPPING & OVERLAP)
+   ========================================================================== */
+.cc-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--cc-header-height);
+  z-index: 50;
+  background: var(--cc-surface-glass);
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  border-bottom: 1px solid var(--cc-divider);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cc-navbar.is-scrolled {
+  background: var(--cc-surface-glass-dense);
+  backdrop-filter: blur(24px) saturate(200%);
+  -webkit-backdrop-filter: blur(24px) saturate(200%);
+  box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.85),
+              0 0 1px 1px rgba(255, 255, 255, 0.04);
+}
+
+.cc-navbar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    rgba(255, 255, 255, 0) 0%, 
+    rgba(255, 255, 255, 0.12) 20%, 
+    rgba(255, 30, 39, 0.35) 50%, 
+    rgba(255, 255, 255, 0.12) 80%, 
+    rgba(255, 255, 255, 0) 100%
+  );
+  pointer-events: none;
+}
+
+/* Nav Link Item */
+.cc-nav-item-link {
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: 0.035em;
+  color: var(--cc-text-muted);
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 6px 4px;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.cc-nav-item-link:hover {
+  color: var(--cc-text-primary);
+}
+
+.cc-nav-item-link.active {
+  color: var(--cc-text-primary);
+  font-weight: 600;
+}
+
+.cc-nav-item-link.active::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: var(--cc-red);
+  box-shadow: 0 0 8px 1.5px var(--cc-red);
+}
+
+/* Primary Outlined Red Button */
+.cc-btn-outlined-red {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 22px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--cc-text-primary);
+  background: rgba(255, 30, 39, 0.05);
+  border: 1.5px solid var(--cc-red);
+  border-radius: 9999px;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 0 16px var(--cc-red-glow);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cc-btn-outlined-red:hover {
+  background: var(--cc-red);
+  color: #FFFFFF;
+  box-shadow: 0 0 24px var(--cc-red-glow-strong);
+  transform: translateY(-1px);
+}
+
+.cc-btn-outlined-red:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Secondary Dark Glass Button */
+.cc-btn-glass {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 22px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--cc-text-muted);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--cc-border-glass);
+  border-radius: 9999px;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.25s ease;
+}
+
+.cc-btn-glass:hover {
+  color: var(--cc-text-primary);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--cc-border-highlight);
+  transform: translateY(-1px);
+}
+
+/* Mobile Drawer */
+.cc-mobile-drawer {
+  position: fixed;
+  top: var(--cc-header-height-mobile);
+  left: 0;
+  right: 0;
+  background: rgba(7, 7, 9, 0.96);
+  backdrop-filter: blur(28px) saturate(200%);
+  -webkit-backdrop-filter: blur(28px) saturate(200%);
+  border-bottom: 1px solid var(--cc-divider);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transform: translateY(-120%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+  z-index: 49;
+}
+
+.cc-mobile-drawer.is-open {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.9);
+}
+
+/* ==========================================================================
+   HERO SECTION & GEOMETRIC VISUAL (PURE CSS)
+   ========================================================================== */
+.hero-visual-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-width: 480px;
+  margin: 0 auto;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(145deg, rgba(18, 18, 22, 0.75) 0%, rgba(9, 9, 11, 0.95) 100%);
+  backdrop-filter: blur(16px);
+  overflow: hidden;
+  box-shadow: 0 24px 60px -15px rgba(0, 0, 0, 0.9),
+              inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+}
+
+.hero-visual-frame::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 65% 35%, rgba(255, 30, 39, 0.24) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+/* Isometric geometric planes */
+.iso-grid-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.85;
+}
+
+/* ==========================================================================
+   SERVICE PANELS & EDITORIAL CARDS
+   ========================================================================== */
+.cc-service-card {
+  background: var(--cc-card-glass);
+  border: 1px solid var(--cc-border-glass);
+  border-radius: 16px;
+  padding: 28px;
+  position: relative;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cc-service-card:hover {
+  border-color: rgba(255, 30, 39, 0.4);
+  box-shadow: 0 16px 36px -12px rgba(255, 30, 39, 0.12),
+              0 0 1px 1px rgba(255, 30, 39, 0.3);
+  transform: translateY(-2px);
+}
+
+.cc-service-card.is-coming-soon {
+  opacity: 0.75;
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+.cc-service-card.is-coming-soon:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: none;
+  transform: none;
+}
+
+/* Numbered pill */
+.cc-num-badge {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--cc-red);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* Availability Badges */
+.badge-available {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #4ADE80;
+  background: rgba(74, 222, 128, 0.08);
+  border: 1px solid rgba(74, 222, 128, 0.25);
+  padding: 3px 9px;
+  border-radius: 9999px;
+}
+
+.badge-available::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: #4ADE80;
+  box-shadow: 0 0 6px #4ADE80;
+}
+
+.badge-catalogue {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #60A5FA;
+  background: rgba(96, 165, 250, 0.08);
+  border: 1px solid rgba(96, 165, 250, 0.25);
+  padding: 3px 9px;
+  border-radius: 9999px;
+}
+
+.badge-catalogue::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: #60A5FA;
+}
+
+.badge-coming-soon {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #F59E0B;
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  padding: 3px 9px;
+  border-radius: 9999px;
+}
+
+.badge-coming-soon::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: #F59E0B;
+}
+
+/* ==========================================================================
+   MODAL DIALOGS
+   ========================================================================== */
+.cc-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 4, 6, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.cc-modal-backdrop.is-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cc-modal-card {
+  background: #0C0C0F;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 32px;
+  position: relative;
+  box-shadow: 0 32px 72px -16px rgba(0, 0, 0, 0.95),
+              0 0 1px 1px rgba(255, 30, 39, 0.2);
+  transform: translateY(16px) scale(0.98);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cc-modal-backdrop.is-active .cc-modal-card {
+  transform: translateY(0) scale(1);
+}
+
+/* Form Controls */
+.cc-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 12px 14px;
+  color: #FFFFFF;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.cc-input:focus {
+  border-color: var(--cc-red);
+  box-shadow: 0 0 0 3px rgba(255, 30, 39, 0.2);
+}
+
+.cc-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--cc-text-muted);
+  margin-bottom: 6px;
+}
+
+/* Accessibility Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

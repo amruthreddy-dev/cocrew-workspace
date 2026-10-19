@@ -1,0 +1,22 @@
+{
+  "name": "cocrew-workspace",
+  "version": "1.0.0",
+  "description": "CO CREW WORKSPACE — Official Landing Page for Creators",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "serve . -p 3000",
+    "test": "node test/validate.js",
+    "build": "node scripts/build.js",
+    "check": "node test/validate.js"
+  },
+  "keywords": [
+    "creators",
+    "workspace",
+    "video-editing",
+    "content-strategy",
+    "landing-page"
+  ],
+  "author": "CO CREW WORKSPACE",
+  "license": "UNLICENSED"
+}

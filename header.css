@@ -1,0 +1,279 @@
+/* ==========================================================================
+   CO CREW WORKSPACE - Header & Navigation Design System
+   Fusion: Minimalism (Clarity) + Maximalism (Contrast) + Glassmorphism (Depth)
+   ========================================================================== */
+
+:root {
+  /* Brand Core Palette */
+  --cc-canvas: #070708;
+  --cc-surface-glass: rgba(10, 10, 12, 0.72);
+  --cc-surface-glass-scrolled: rgba(7, 7, 9, 0.88);
+  --cc-red: #FF1E27;
+  --cc-red-glow: rgba(255, 30, 39, 0.22);
+  --cc-red-glow-strong: rgba(255, 30, 39, 0.45);
+  --cc-text-primary: #FFFFFF;
+  --cc-text-muted: #9CA3AF;
+  --cc-text-subtle: #6B7280;
+  --cc-border-glass: rgba(255, 255, 255, 0.08);
+  --cc-border-highlight: rgba(255, 255, 255, 0.14);
+  --cc-divider: rgba(255, 255, 255, 0.07);
+  
+  /* Layout Metrics */
+  --cc-header-height: 76px;
+  --cc-header-height-mobile: 68px;
+}
+
+/* Glassmorphic Navbar Container */
+.cc-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--cc-header-height);
+  z-index: 50;
+  background: var(--cc-surface-glass);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border-bottom: 1px solid var(--cc-divider);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cc-navbar.is-scrolled {
+  background: var(--cc-surface-glass-scrolled);
+  backdrop-filter: blur(24px) saturate(200%);
+  -webkit-backdrop-filter: blur(24px) saturate(200%);
+  box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.8),
+              0 0 1px 1px rgba(255, 255, 255, 0.04);
+}
+
+/* Refined top hairline reflection */
+.cc-navbar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    rgba(255, 255, 255, 0) 0%, 
+    rgba(255, 255, 255, 0.12) 25%, 
+    rgba(255, 30, 39, 0.3) 50%, 
+    rgba(255, 255, 255, 0.12) 75%, 
+    rgba(255, 255, 255, 0) 100%
+  );
+  pointer-events: none;
+}
+
+/* Logo Sizing and Hover Glow */
+.cc-logo-link {
+  display: inline-flex;
+  align-items: center;
+  transition: transform 0.25s ease, filter 0.25s ease;
+  position: relative;
+}
+
+.cc-logo-link:hover {
+  transform: translateY(-0.5px);
+  filter: drop-shadow(0 0 14px rgba(255, 30, 39, 0.28));
+}
+
+.cc-logo-img {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .cc-logo-img {
+    height: 32px;
+  }
+}
+
+/* Navigation Links (Centre) */
+.cc-nav-list {
+  display: flex;
+  align-items: center;
+  gap: 2.25rem; /* 36px */
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cc-nav-item {
+  position: relative;
+}
+
+.cc-nav-link {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: 0.035em;
+  color: var(--cc-text-muted);
+  text-decoration: none;
+  padding: 6px 4px;
+  transition: color 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cc-nav-link:hover {
+  color: var(--cc-text-primary);
+}
+
+/* Active State: Minimalist dot indicator & luminous white text */
+.cc-nav-link.active {
+  color: var(--cc-text-primary);
+  font-weight: 600;
+}
+
+.cc-nav-link.active::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: var(--cc-red);
+  box-shadow: 0 0 8px 1.5px var(--cc-red);
+  animation: cc-pulse-dot 2.5s infinite ease-in-out;
+}
+
+@keyframes cc-pulse-dot {
+  0%, 100% { opacity: 0.85; transform: translateX(-50%) scale(1); }
+  50% { opacity: 1; transform: translateX(-50%) scale(1.15); box-shadow: 0 0 12px 2px var(--cc-red); }
+}
+
+/* Outlined Red Button (Right) */
+.cc-btn-service {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 22px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--cc-text-primary);
+  background: rgba(255, 30, 39, 0.05);
+  border: 1.5px solid var(--cc-red);
+  border-radius: 9999px;
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 16px var(--cc-red-glow);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cc-btn-service:hover {
+  background: var(--cc-red);
+  color: #FFFFFF;
+  box-shadow: 0 0 24px var(--cc-red-glow-strong);
+  transform: translateY(-1px);
+}
+
+.cc-btn-service:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Arrow indicator inside CTA */
+.cc-btn-service svg {
+  transition: transform 0.25s ease;
+}
+
+.cc-btn-service:hover svg {
+  transform: translateX(2px);
+}
+
+/* Mobile Toggle Hamburger */
+.cc-hamburger {
+  display: none;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--cc-border-glass);
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 0;
+  color: var(--cc-text-primary);
+  transition: all 0.2s ease;
+}
+
+.cc-hamburger:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+@media (max-width: 1023px) {
+  .cc-hamburger {
+    display: inline-flex;
+  }
+  .cc-nav-list {
+    display: none;
+  }
+  .cc-navbar {
+    height: var(--cc-header-height-mobile);
+  }
+}
+
+/* Mobile Glass Drawer */
+.cc-mobile-drawer {
+  position: fixed;
+  top: var(--cc-header-height-mobile);
+  left: 0;
+  right: 0;
+  background: rgba(7, 7, 9, 0.96);
+  backdrop-filter: blur(28px) saturate(200%);
+  -webkit-backdrop-filter: blur(28px) saturate(200%);
+  border-bottom: 1px solid var(--cc-divider);
+  padding: 24px 24px 32px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transform: translateY(-110%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+              opacity 0.25s ease;
+  z-index: 49;
+}
+
+.cc-mobile-drawer.is-open {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.9);
+}
+
+.cc-mobile-nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--cc-text-muted);
+  text-decoration: none;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid transparent;
+}
+
+.cc-mobile-nav-link:hover,
+.cc-mobile-nav-link.active {
+  color: var(--cc-text-primary);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.cc-mobile-nav-link.active {
+  border-left: 3px solid var(--cc-red);
+  font-weight: 600;
+}
